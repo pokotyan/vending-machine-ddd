@@ -1,0 +1,26 @@
+{
+  "name": "vending-machine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "clean": "tsc --build --clean && tsc --build --force --verbose",
+    "build": "rimraf ./lib/* && tsc -p tsconfig.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inversify": "^4.13.0",
+    "inversify-inject-decorators": "^3.1.0",
+    "reflect-metadata": "^0.1.12",
+    "rimraf": "^2.6.2"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "ts-loader": "^5.2.1",
+    "typescript": "^3.1.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  }
+}
