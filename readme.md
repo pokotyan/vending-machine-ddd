@@ -1,26 +1,26 @@
 # 起動方法
-- lerna
+## lerna
 
 lerna init  
 lerna clean  
 lerna bootstrap  
 
-- vending-machineのbuild
+## vending-machineのbuild
 
 cd vending-machine/  
 npm run build  
 
-- uiのpackage-lock.jsonを削除（なぜかvending-machineが入っていないため）
+## uiのpackage-lock.jsonを削除（なぜかvending-machineが入っていないため）
 
 cd ../ui  
 rm package-lock.json  
 
-- uiのpackage-lock.jsonにvending-machineを追加
+## uiのpackage-lock.jsonにvending-machineを追加
 
 cd ..  
 npm run bootstrap  
 
-- run
+## run
 
 cd ui/  
 ts-node src/index.ts  
