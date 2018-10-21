@@ -1,21 +1,20 @@
 # 起動方法
-
-lerna init
-lerna clean
-lerna bootstrap
+lerna init  
+lerna clean  
+lerna bootstrap  
 
 - vending-machineのbuild
-cd vending-machine/
-npm run build
+cd vending-machine/  
+npm run build  
 
 - uiのpackage-lock.jsonを削除（なぜかvending-machineが入っていないため）
-cd ../ui
-rm package-lock.json
+cd ../ui  
+rm package-lock.json  
 
 - uiのpackage-lock.jsonにvending-machineを追加
-cd ..
-npm run bootstrap
+cd ..  
+npm run bootstrap  
 
 - run
-cd ui/
-ts-node src/index.ts
+cd ui/  
+ts-node src/index.ts  
