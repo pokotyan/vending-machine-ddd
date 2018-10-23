@@ -1,5 +1,6 @@
 import machine from 'vending-machine';
 
+
 machine.storedItem([{
   name: 'chocolate',
   price: 100,
@@ -12,4 +13,4 @@ machine.storedItem([{
 
 console.log(machine);
 
-
+export default () => <div>Welcome to next.js!</div>

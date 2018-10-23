@@ -14,6 +14,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "declaration": true // 型定義ファイルのindex.d.tsを作ってくれる
   }
 }

@@ -23,4 +23,4 @@ npm run bootstrap
 ## run
 
 cd ui/  
-ts-node src/index.ts  
+npm run dev

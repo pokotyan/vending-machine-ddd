@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "lib"
-  },
-  "references": [
-    { "path": "../vending-machine" }
-  ]
-}
