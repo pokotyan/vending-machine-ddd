@@ -1,5 +1,5 @@
-import ItemModel from './item/interface';
-import InletModel from './inlet/interface';
+import ItemModel from '../item/interface';
+import InletModel from '../inlet/interface';
 
 interface Machine {
   stock: ItemModel[];

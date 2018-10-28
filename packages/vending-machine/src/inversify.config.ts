@@ -20,9 +20,9 @@ import InputInlet from './usecase/@input/inlet';
 import IUseCaseInlet from './usecase/inlet/interface';
 import Inlet from './usecase/inlet';
 
-import MachineModel from './domain/model/machine';
-import { TYPES as TMachine } from './repository/machine/type';
-import Machine from './repository/machine';
+import MachineModel from './domain/model/machine/interface';
+import { TYPES as TMachine } from './domain/model/machine/type';
+import Machine from './domain/model/machine';
 
 // container.bind<"取得する時の型">("識別子").to("登録対象クラス")
 container.bind<IInputStoreItem>(TInputStoreItem.onlyDrink).to(InputStoreItem);

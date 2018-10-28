@@ -1,6 +1,6 @@
 import container from './inversify.config'
 import MachineModel from './domain/model/machine';
-import { TYPES } from './repository/machine/type';
+import { TYPES } from './domain/model/machine/type';
 
 const machine = container.get<MachineModel>(TYPES.Machine);
 
