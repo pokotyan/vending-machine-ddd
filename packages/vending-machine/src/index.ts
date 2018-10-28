@@ -20,7 +20,21 @@ machine.setInlets([{
   currentStockNumber: 0,
 }]);
 
-console.log(machine);
+machine.storedItem([{
+  name: 'chocolate',
+  price: 100,
+  type: 'food',
+  isColdable: null,
+  isHottable: null
+},{
+  name: 'cola',
+  price: 100,
+  type: 'drink',
+  isColdable: false,
+  isHottable: true,
+}]);
 
+console.log(machine);
+console.log(machine.inlets[0].isSoldOut());
 
 export default machine;

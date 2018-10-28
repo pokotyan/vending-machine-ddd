@@ -14,7 +14,7 @@ export default class StoreItem implements IUseCaseStoreItem {
   main(items): ItemModel[]{
     const inputItems: ItemModel[] = this._input.onlyDrink(items);
 
-    return inputItems;
+    return inputItems.map(item => new ItemModel(item))
   }
 }
 

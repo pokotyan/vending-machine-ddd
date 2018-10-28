@@ -12,7 +12,10 @@ export default class Inlet implements IUseCaseInlet {
   @lazyInject(TInputInlet.setInlet) public _input: IInputInlet;
 
   init(inlets, numberOfInlet): InletModel[] {
-    return this._input.setInlet(inlets, numberOfInlet);
+    const inputInlets = this._input.setInlet(inlets, numberOfInlet);
+
+    return inputInlets.map(inlet => new InletModel(inlet));
+
   }
 }
 

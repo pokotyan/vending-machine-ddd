@@ -7,12 +7,12 @@ class Item implements ItemModel {
   isColdable: boolean | null;
   isHottable: boolean | null;
 
-  constructor() {
-    this.name = '';
-    this.price = 0;
-    this.type = 'drink';
-    this.isColdable = null;
-    this.isHottable = null;
+  constructor(model) {
+    this.name = model.name || '';
+    this.price = model.price || 0;
+    this.type = model.type || 'drink';
+    this.isColdable = model.isColdable || null;
+    this.isHottable = model.isHottable || null;
   }
 }
 

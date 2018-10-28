@@ -8,13 +8,13 @@ class Inlet implements InletModel {
   maxStockNumber: number;
   currentStockNumber: number;
 
-  constructor() {
-    this.type = '';
-    this.itemName = '';
-    this.isColdable = null;
-    this.isHottable = null;
-    this.maxStockNumber = 0;
-    this.currentStockNumber = 0;
+  constructor(model) {
+    this.type = model.type || '';
+    this.itemName = model.itemName || '';
+    this.isColdable = model.isColdable || null;
+    this.isHottable = model.isHottable || null;
+    this.maxStockNumber = model.maxStockNumber || 0;
+    this.currentStockNumber = model.currentStockNumber || 0;
   }
 
   isSoldOut(): boolean {
