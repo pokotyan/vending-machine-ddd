@@ -1,4 +1,4 @@
-import ItemModel from './item';
+import ItemModel from './item/interface';
 import InletModel from './inlet/interface';
 
 interface Machine {
