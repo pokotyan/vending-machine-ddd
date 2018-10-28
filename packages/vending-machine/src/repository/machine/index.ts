@@ -3,19 +3,30 @@ import { lazyInject } from '../../inversify.decorator'
 
 import MachineModel from '../../domain/model/machine';
 
+import { TYPES as TUseCase } from '../../usecase/type';
 import IUseCaseStoreItem from '../../usecase/storeItem/interface'
-import { TYPES as TUseCase } from '../../usecase/storeItem/type';
+import IUseCaseInlet from '../../usecase/inlet/interface'
 
 import ItemModel from '../../domain/model/item';
+import InletModel from '../../domain/model/inlet';
 
 @injectable()
 class Machine implements MachineModel {
-  @lazyInject(TUseCase.UseCase) public _storedItem: IUseCaseStoreItem;
+  @lazyInject(TUseCase.StoreItem) public _storedItem: IUseCaseStoreItem;
+  @lazyInject(TUseCase.Inlet) public _setInlet: IUseCaseInlet;
 
   stock: ItemModel[];
+  inlets: InletModel[];
+  numberOfInlet: number;
 
   constructor() {
     this.stock = [];
+    this.inlets = [];
+    this.numberOfInlet = 2;
+  }
+
+  setInlets(inlets: InletModel[]) {
+    this.inlets = this._setInlet.init(inlets, this.numberOfInlet)
   }
 
   storedItem(items: ItemModel[]) {

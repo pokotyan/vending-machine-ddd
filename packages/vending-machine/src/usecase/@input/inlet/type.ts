@@ -1,5 +1,5 @@
 const TYPES = {
-  UseCase: Symbol.for('UseCase'),
+  setInlet: Symbol.for('setInlet'),
 };
 
 export { TYPES };
