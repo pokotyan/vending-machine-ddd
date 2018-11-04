@@ -7,3 +7,9 @@ interface Item {
 };
 
 export default Item;
+
+// name: 名前
+// price: 値段
+// type: drink | food
+// isColdable: 冷たくできるか
+// isHottable: 温めれるか

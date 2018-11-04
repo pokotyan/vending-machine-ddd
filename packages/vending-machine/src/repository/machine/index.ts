@@ -1,38 +1,31 @@
 import { injectable, inject, LazyServiceIdentifer } from 'inversify';
-import { lazyInject } from '../../inversify.decorator'
-
-import MachineModel from '../../domain/model/machine';
-
-import { TYPES as TUseCase } from '../../usecase/type';
-import IUseCaseStoreItem from '../../usecase/storeItem/interface'
-import IUseCaseInlet from '../../usecase/inlet/interface'
-
-import ItemModel from '../../domain/model/item';
-import InletModel from '../../domain/model/inlet';
+import IMachineRepository from './interface'
 
 @injectable()
-class Machine implements MachineModel {
-  @lazyInject(TUseCase.StoreItem) public _storedItem: IUseCaseStoreItem;
-  @lazyInject(TUseCase.Inlet) public _setInlet: IUseCaseInlet;
-
-  stock: ItemModel[];
-  inlets: InletModel[];
-  numberOfInlet: number;
-
-  constructor() {
-    this.stock = [];
-    this.inlets = [];
-    this.numberOfInlet = 2;
-  }
-
-  setInlets(inlets: InletModel[]) {
-    this.inlets = this._setInlet.init(inlets, this.numberOfInlet)
-  }
-
-  storedItem(items: ItemModel[]) {
-    const storedItems = this._storedItem.main(items);
-
-    this.stock = storedItems
+class Machine implements IMachineRepository {
+  getCurrentStatus() {
+    // @todo dbから取ってくる
+    return {
+      inlets: [{
+        id: 1,
+        type: 'drink',
+        itemName: 'cola',
+        isColdable: true,
+        isHottable: null,
+        maxStockNumber: 10,
+        currentStockNumber: 0,
+        stock: []
+      }, {
+        id: 2,
+        type: 'drink',
+        itemName: 'コンポタ',
+        isColdable: null,
+        isHottable: true,
+        maxStockNumber: 10,
+        currentStockNumber: 0,
+        stock: []
+      }]
+    } 
   }
 }
 

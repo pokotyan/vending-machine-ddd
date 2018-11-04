@@ -1,6 +1,7 @@
 import ItemModel from './interface';
 
 class Item implements ItemModel {
+  inletId?: number;
   name: string;
   price: number;
   type: string;
@@ -8,6 +9,7 @@ class Item implements ItemModel {
   isHottable: boolean | null;
 
   constructor(model) {
+    this.inletId = model.inletId || null;
     this.name = model.name || '';
     this.price = model.price || 0;
     this.type = model.type || 'drink';

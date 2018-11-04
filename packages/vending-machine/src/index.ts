@@ -1,40 +1,36 @@
 import container from './inversify.config'
-import MachineModel from './domain/model/machine';
-import { TYPES } from './domain/model/machine/type';
 
-const machine = container.get<MachineModel>(TYPES.Machine);
+import { TYPES as TUseCase } from './usecase/type';
+import IMachineUseCase from './usecase/machine/interface';
 
-machine.setInlets([{
+const machineUseCase = container.get<IMachineUseCase>(TUseCase.initFromDB);
+
+const machine = machineUseCase.initFromDB();
+
+console.log(machine);
+
+machineUseCase.setInlet([{
+  id: 1,
   type: 'drink',
-  itemName: 'cola',
+  itemName: 'soda',
   isColdable: true,
   isHottable: false,
   maxStockNumber: 10,
-  currentStockNumber: 0,
+  stock: []
 }, {
+  id: 2,
   type: 'drink',
-  itemName: 'コンポタ',
+  itemName: '水',
   isColdable: false,
   isHottable: true,
   maxStockNumber: 10,
-  currentStockNumber: 0,
-}]);
-
-machine.storedItem([{
-  name: 'chocolate',
-  price: 100,
-  type: 'food',
-  isColdable: null,
-  isHottable: null
-},{
-  name: 'cola',
-  price: 100,
-  type: 'drink',
-  isColdable: false,
-  isHottable: true,
+  stock: []
 }]);
 
 console.log(machine);
+
 console.log(machine.inlets[0].isSoldOut());
 
-export default machine;
+// マシーンユースケースはthis._machineにマシーンモデルを持つ
+// その際、マシーンモデルのinit処理で現在のマシン状態をリポジトリから取ってきてモデル状態に反映させるってことをやる。
+// マシーンユースケースの処理はデータの永続化処理とthis._machineに生えているメソッド(モデルの更新)を叩く処理をやる

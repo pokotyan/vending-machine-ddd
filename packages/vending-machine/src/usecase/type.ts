@@ -1,6 +1,6 @@
 const TYPES = {
-  Inlet: Symbol.for('Inlet'),
-  StoreItem: Symbol.for('StoreItem'),
+  initFromDB: Symbol.for('initFromDB'),
+  setInlet: Symbol.for('setInlet')
 };
 
 export { TYPES };

@@ -2,35 +2,32 @@
 /// <reference path="../node_modules/inversify/dts/inversify.d.ts" /> 
 
 import 'reflect-metadata';
-
 import { container } from './inversify.decorator';
 
-import IInputStoreItem from './usecase/@input/storeItem/interface'
-import { TYPES as TInputStoreItem } from './usecase/@input/storeItem/type';
-import InputStoreItem from './usecase/@input/storeItem';
-
-import IUseCaseStoreItem from './usecase/storeItem/interface';
 import { TYPES as TUseCase } from './usecase/type';
-import StoreItem from './usecase/storeItem';
 
-import IInputInlet from './usecase/@input/inlet/interface'
-import { TYPES as TInputInlet } from './usecase/@input/inlet/type';
-import InputInlet from './usecase/@input/inlet';
+import IInletRepository from './repository/inlet/interface'
+import { TYPES as TInletRepository } from './repository/inlet/type';
+import InletRepository from './repository/inlet';
 
-import IUseCaseInlet from './usecase/inlet/interface';
-import Inlet from './usecase/inlet';
+import IMachineRepository from './repository/machine/interface'
+import { TYPES as TMachineRepository } from './repository/machine/type';
+import MachineRepository from './repository/machine';
+
+import IMachineUseCase from './usecase/machine/interface';
+import MachineUseCase from './usecase/machine';
 
 import MachineModel from './domain/model/machine/interface';
 import { TYPES as TMachine } from './domain/model/machine/type';
 import Machine from './domain/model/machine';
 
 // container.bind<"取得する時の型">("識別子").to("登録対象クラス")
-container.bind<IInputStoreItem>(TInputStoreItem.onlyDrink).to(InputStoreItem);
-container.bind<IUseCaseStoreItem>(TUseCase.StoreItem).to(StoreItem);
+container.bind<IInletRepository>(TInletRepository.set).to(InletRepository);
 
-container.bind<IInputInlet>(TInputInlet.setInlet).to(InputInlet);
-container.bind<IUseCaseInlet>(TUseCase.Inlet).to(Inlet);
+container.bind<IMachineRepository>(TMachineRepository.getCurrentStatus).to(MachineRepository);
+container.bind<IMachineUseCase>(TUseCase.initFromDB).to(MachineUseCase);
+container.bind<IMachineUseCase>(TUseCase.setInlet).to(MachineUseCase);
 
-container.bind<MachineModel>(TMachine.Machine).to(Machine);
+container.bind<IMachineUseCase>("Newable<Machine>").toConstructor<Machine>(Machine); // constructor injection
 
 export default container;
