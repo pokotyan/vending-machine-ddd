@@ -13,18 +13,22 @@ import { TYPES as TInletRepository } from '../../repository/inlet/type';
 import IItemRepository from '../../repository/item/interface'
 import { TYPES as TItemRepository } from '../../repository/item/type';
 
-import IMachineRepository from '../../repository/machine/interface'
-import { TYPES as TMachineRepository } from '../../repository/machine/type';
+import ISalesRepository from '../../repository/sales/interface'
+import { TYPES as TSalesRepository } from '../../repository/sales/type';
+
+// import IMachineRepository from '../../repository/machine/interface'
+// import { TYPES as TMachineRepository } from '../../repository/machine/type';
 
 import InletModel from '../../domain/model/inlet';
+import MoneyModel from '../../domain/model/money';
 import MachineModel from '../../domain/model/machine';
-import * as MachineService from '../../domain/model/machine/service';
 
 @injectable()
 export default class MachineUseCase implements IMachineUseCase {
   @lazyInject(TInletRepository.inletRepository) public _inletRepository: IInletRepository;
   @lazyInject(TItemRepository.itemRepository) public _itemRepository: IItemRepository;
-  @lazyInject(TMachineRepository.machineRepository) public _machineRepository: IMachineRepository;
+  @lazyInject(TSalesRepository.salesRepository) public _salesRepository: ISalesRepository;
+  // @lazyInject(TMachineRepository.machineRepository) public _machineRepository: IMachineRepository;
 
   private _machine: MachineModel;
 
@@ -33,11 +37,11 @@ export default class MachineUseCase implements IMachineUseCase {
   }
 
   initFromDB(): MachineModel {
-    const {
-      inlets
-    } = this._machineRepository.getCurrentStatus();
+    const inlets = this._inletRepository.getCurrentStatus();
+    const sales = this._salesRepository.getCurrentStatus();
 
-    MachineService.setInlets({ machineModel: this._machine, inlets })
+    Service.Machine.setInlets({ machineModel: this._machine, inlets })
+    Service.Machine.setSales({ machineModel: this._machine, sales })
 
     return this._machine;
   }
@@ -47,23 +51,31 @@ export default class MachineUseCase implements IMachineUseCase {
     this._inletRepository.set(inlets);
 
     // ui側で使うマシーンモデルの更新
-    MachineService.setInlets({ machineModel: this._machine, inlets })
+    Service.Machine.setInlets({ machineModel: this._machine, inlets })
 
     return this._machine;
   }
 
   // itemリポジトリから在庫を取得。
   // その在庫を投入口に入れていく。
-  storedItem(inlet) {
+  storedItem(inlet: InletModel): MachineModel {
     const stockItems = this._itemRepository.getStockItems();
 
-    console.log(stockItems);
-
     stockItems.forEach(stockItem => {
-      Service.InletService.setStock(inlet, stockItem).catch(() => {});
+      Service.Inlet.setStock(inlet, stockItem).catch(() => {});
     });
 
     return this._machine;
   }
+
+  pay(money: MoneyModel): MachineModel {
+    Service.Machine.setPaid({ machineModel: this._machine, paidAmount: money });
+
+    return this._machine;
+  }
+
+  // buyingItem(inletId: number) {
+  //   // 引数のinletに在庫があって、かつ現在の投入金額がアイテムの金額を上回るならアイテムを放出し、売り上げを加算する
+  // }
 }
 

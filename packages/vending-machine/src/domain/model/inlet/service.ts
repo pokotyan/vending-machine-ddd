@@ -1,5 +1,7 @@
 import InletModel from './index';
 import ItemModel from '../item';
+import MachineModel from '../machine';
+import * as Service from '../service';
 
 export const getCurrentStock = (inletModel: InletModel): number => {
   return inletModel.stock.length;
@@ -33,4 +35,13 @@ export const setStock = (inletModel: InletModel, item: ItemModel): Promise<Inlet
   }
 
   return Promise.resolve(inletModel);
+};
+
+export const isPurchaseAvailable = ({ machine, inletId }: {
+  machine: MachineModel;
+  inletId: number;
+}): boolean => {
+  const inlet = machine.inlets.find(inlet => inlet.id === inletId);
+
+  return Service.Money.calcTotalPayments(machine) >= inlet.price;
 };

@@ -14,6 +14,10 @@ import IItemRepository from './repository/item/interface'
 import { TYPES as TItemRepository } from './repository/item/type';
 import ItemRepository from './repository/item';
 
+import ISalesRepository from './repository/sales/interface'
+import { TYPES as TSalesRepository } from './repository/sales/type';
+import SalesRepository from './repository/sales';
+
 import IMachineRepository from './repository/machine/interface'
 import { TYPES as TMachineRepository } from './repository/machine/type';
 import MachineRepository from './repository/machine';
@@ -24,6 +28,7 @@ import MachineUseCase from './usecase/machine';
 // container.bind<"取得する時の型">("識別子").to("登録対象クラス")
 container.bind<IInletRepository>(TInletRepository.inletRepository).to(InletRepository);
 container.bind<IItemRepository>(TItemRepository.itemRepository).to(ItemRepository);
+container.bind<ISalesRepository>(TSalesRepository.salesRepository).to(SalesRepository);
 container.bind<IMachineRepository>(TMachineRepository.machineRepository).to(MachineRepository);
 
 container.bind<IMachineUseCase>(TUseCase.machineUseCase).to(MachineUseCase);
