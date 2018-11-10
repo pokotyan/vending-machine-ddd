@@ -4,4 +4,5 @@ import InletModel from '../../domain/model/inlet'
 export default interface IMachineUseCase {
   initFromDB(): MachineModel;
   setInlet(inlets: InletModel[]): MachineModel;
+  storedItem(inlet: InletModel): MachineModel;
 };

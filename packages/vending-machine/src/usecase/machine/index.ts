@@ -3,12 +3,15 @@
 import { injectable, inject } from 'inversify';
 import { lazyInject } from '../../inversify.decorator'
 
-
 import IMachineUseCase from './interface';
 
+import * as Service from '../../domain/model/service';
 
 import IInletRepository from '../../repository/inlet/interface'
 import { TYPES as TInletRepository } from '../../repository/inlet/type';
+
+import IItemRepository from '../../repository/item/interface'
+import { TYPES as TItemRepository } from '../../repository/item/type';
 
 import IMachineRepository from '../../repository/machine/interface'
 import { TYPES as TMachineRepository } from '../../repository/machine/type';
@@ -19,8 +22,9 @@ import * as MachineService from '../../domain/model/machine/service';
 
 @injectable()
 export default class MachineUseCase implements IMachineUseCase {
-  @lazyInject(TInletRepository.set) public _inletRepository: IInletRepository;
-  @lazyInject(TMachineRepository.getCurrentStatus) public _machineRepository: IMachineRepository;
+  @lazyInject(TInletRepository.inletRepository) public _inletRepository: IInletRepository;
+  @lazyInject(TItemRepository.itemRepository) public _itemRepository: IItemRepository;
+  @lazyInject(TMachineRepository.machineRepository) public _machineRepository: IMachineRepository;
 
   private _machine: MachineModel;
 
@@ -48,10 +52,18 @@ export default class MachineUseCase implements IMachineUseCase {
     return this._machine;
   }
 
-  // storedItem() {
-  //   itemリポジトリから在庫を取得。
-  //   その在庫を投入口に入れていく。投入口に入れれるアイテムの判定は以下。
-  //   投入口がいっぱいじゃない && アイテムの名前と投入口の名前が一致 && 冷たい、暖かいの判定が一致
-  // }
+  // itemリポジトリから在庫を取得。
+  // その在庫を投入口に入れていく。
+  storedItem(inlet) {
+    const stockItems = this._itemRepository.getStockItems();
+
+    console.log(stockItems);
+
+    stockItems.forEach(stockItem => {
+      Service.InletService.setStock(inlet, stockItem).catch(() => {});
+    });
+
+    return this._machine;
+  }
 }
 

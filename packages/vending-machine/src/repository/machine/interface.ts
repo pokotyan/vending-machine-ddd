@@ -1,5 +1,5 @@
-import IInletModel from '../../domain/model/inlet/interface';
+import InletModel from '../../domain/model/inlet';
 
 export default interface IMachineRepository {
-  getCurrentStatus(): { inlets: IInletModel[] };
+  getCurrentStatus(): { inlets: InletModel[] };
 };

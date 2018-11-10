@@ -1,5 +1,5 @@
 const TYPES = {
-  set: Symbol.for('set'),
+  inletRepository: Symbol.for('inletRepository'),
 };
 
 export { TYPES };

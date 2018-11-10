@@ -1,5 +1,5 @@
 const TYPES = {
-  getCurrentStatus: Symbol.for('getCurrentStatus'),
+  machineRepository: Symbol.for('machineRepository'),
 };
 
 export { TYPES };

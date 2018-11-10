@@ -10,8 +10,7 @@ class Machine implements IMachineRepository {
         id: 1,
         type: 'drink',
         itemName: 'cola',
-        isColdable: true,
-        isHottable: null,
+        temperatureType: 'cold',
         maxStockNumber: 10,
         currentStockNumber: 0,
         stock: []
@@ -19,8 +18,7 @@ class Machine implements IMachineRepository {
         id: 2,
         type: 'drink',
         itemName: 'コンポタ',
-        isColdable: null,
-        isHottable: true,
+        temperatureType: 'hot',
         maxStockNumber: 10,
         currentStockNumber: 0,
         stock: []

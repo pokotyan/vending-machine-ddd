@@ -4,8 +4,7 @@ class Inlet {
   id: number;
   type: string;
   itemName: string;
-  isColdable: boolean | null;
-  isHottable: boolean | null;
+  temperatureType: string;
   maxStockNumber: number;
   stock: ItemModel[];
 
@@ -13,8 +12,7 @@ class Inlet {
     this.id = model.id || null;
     this.type = model.type || '';
     this.itemName = model.itemName || '';
-    this.isColdable = model.isColdable || null;
-    this.isHottable = model.isHottable || null;
+    this.temperatureType = model.temperatureType || 'cold';
     this.maxStockNumber = model.maxStockNumber || 0;
     this.stock = model.stock || 0;
   }

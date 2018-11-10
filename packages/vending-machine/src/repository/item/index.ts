@@ -1,19 +1,21 @@
-class ItemRepository {
+import { injectable } from 'inversify';
+import IItemRepository from './interface'
+
+@injectable()
+class ItemRepository implements IItemRepository {
   getStockItems() {
     return [
       {
-        name: 'milk',
-        price: '100',
+        name: 'ソーダ',
+        price: 100,
         type: 'drink',
-        isColdable: true,
-        isHottable: true,
+        temperatureType: 'cold'
       },
       {
-        name: 'milk',
-        price: '100',
+        name: '水',
+        price: 100,
         type: 'drink',
-        isColdable: true,
-        isHottable: true,
+        temperatureType: 'cold',
       }
     ]
   }

@@ -3,16 +3,14 @@ class Item {
   name: string;
   price: number;
   type: string;
-  isColdable: boolean | null;
-  isHottable: boolean | null;
+  temperatureType: string;
 
   constructor(model) {
     this.inletId = model.inletId || null;
     this.name = model.name || '';
     this.price = model.price || 0;
     this.type = model.type || 'drink';
-    this.isColdable = model.isColdable || null;
-    this.isHottable = model.isHottable || null;
+    this.temperatureType = model.temperatureType || 'cold';
   }
 }
 
@@ -21,5 +19,4 @@ export default Item;
 // name: 名前
 // price: 値段
 // type: drink | food
-// isColdable: 冷たくできるか
-// isHottable: 温めれるか
+// temperatureType: hot | cold
