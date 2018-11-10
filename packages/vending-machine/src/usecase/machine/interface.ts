@@ -1,7 +1,7 @@
-import IMachineModel from '../../domain/model/machine/interface'
-import IInletModel from '../../domain/model/inlet/interface'
+import MachineModel from '../../domain/model/machine'
+import InletModel from '../../domain/model/inlet'
 
 export default interface IMachineUseCase {
-  initFromDB(): IMachineModel;
-  setInlet(inlets: IInletModel[]): IMachineModel;
+  initFromDB(): MachineModel;
+  setInlet(inlets: InletModel[]): MachineModel;
 };

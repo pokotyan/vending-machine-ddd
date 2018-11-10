@@ -1,6 +1,4 @@
-import ItemModel from './interface';
-
-class Item implements ItemModel {
+class Item {
   inletId?: number;
   name: string;
   price: number;
@@ -19,3 +17,9 @@ class Item implements ItemModel {
 }
 
 export default Item;
+
+// name: 名前
+// price: 値段
+// type: drink | food
+// isColdable: 冷たくできるか
+// isHottable: 温めれるか

@@ -15,7 +15,7 @@ import { TYPES as TMachineRepository } from '../../repository/machine/type';
 
 import InletModel from '../../domain/model/inlet';
 import MachineModel from '../../domain/model/machine';
-import IMachineModel from '../../domain/model/machine/interface';
+import * as MachineService from '../../domain/model/machine/service';
 
 @injectable()
 export default class MachineUseCase implements IMachineUseCase {
@@ -24,28 +24,26 @@ export default class MachineUseCase implements IMachineUseCase {
 
   private _machine: MachineModel;
 
-  public constructor(
-    @inject("Newable<Machine>") _machine: MachineModel
-  ) {
-      this._machine = new MachineModel();
+  public constructor() {
+    this._machine = new MachineModel();
   }
 
-  initFromDB(): IMachineModel {
+  initFromDB(): MachineModel {
     const {
       inlets
     } = this._machineRepository.getCurrentStatus();
 
-    this._machine.setInlets(inlets);
+    MachineService.setInlets({ machineModel: this._machine, inlets })
 
     return this._machine;
   }
 
-  setInlet(inlets: InletModel[]): IMachineModel {
+  setInlet(inlets: InletModel[]): MachineModel {
     // 永続化
     this._inletRepository.set(inlets);
 
     // ui側で使うマシーンモデルの更新
-    this._machine.setInlets(inlets);
+    MachineService.setInlets({ machineModel: this._machine, inlets })
 
     return this._machine;
   }

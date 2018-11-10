@@ -3,6 +3,9 @@ import container from './inversify.config'
 import { TYPES as TUseCase } from './usecase/type';
 import IMachineUseCase from './usecase/machine/interface';
 
+import * as inletService from './domain/model/inlet/service';
+
+
 const machineUseCase = container.get<IMachineUseCase>(TUseCase.initFromDB);
 
 const machine = machineUseCase.initFromDB();
@@ -29,7 +32,7 @@ machineUseCase.setInlet([{
 
 console.log(machine);
 
-console.log(machine.inlets[0].isSoldOut());
+console.log(inletService.isSoldOut(machine.inlets[0]));
 
 // マシーンユースケースはthis._machineにマシーンモデルを持つ
 // その際、マシーンモデルのinit処理で現在のマシン状態をリポジトリから取ってきてモデル状態に反映させるってことをやる。
