@@ -6,12 +6,14 @@ class Machine {
   numberOfInlet: number;
   sales: MoneyModel;
   paidAmount: MoneyModel;
+  change: MoneyModel;
 
   constructor() {
     this.inlets = [];
     this.numberOfInlet = 2;
     this.sales = new MoneyModel();
     this.paidAmount = new MoneyModel();
+    this.change = new MoneyModel();
   }
 }
 
@@ -22,3 +24,4 @@ export default Machine;
 // setInlets: 投入口の設定関数
 // sales: 売り上げ
 // paidAmount: 投入金額
+// change: お釣り

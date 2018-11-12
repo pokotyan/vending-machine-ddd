@@ -52,6 +52,7 @@ export const isPurchaseAvailable = ({ machine, inletId }: {
   inletId: number;
 }): boolean => {
   const inlet = machine.inlets.find(inlet => inlet.id === inletId);
+  const paidAmount = Service.Money.calcTotalPrice(machine, 'paidAmount');
 
-  return !isSoldOut(inlet) && Service.Money.calcTotalPayments(machine) >= inlet.price;
+  return !isSoldOut(inlet) && paidAmount >= inlet.price;
 };

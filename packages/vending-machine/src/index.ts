@@ -21,15 +21,22 @@ console.log(machine);
 console.log('お金を入れる------------');
 machineUseCase.pay({
   100: 1,
-  10: 2
+  10: 10
 });
 console.log(machine);
+
+let sales = Service.Money.calcTotalPrice(machine, 'sales');
+console.log(`売り上げ${sales}`);
 
 
 console.log('投入口1のアイテム購入------------');
 machineUseCase.buyingItem({ inletId: 1 });
 
 console.log(machine);
+
+sales = Service.Money.calcTotalPrice(machine, 'sales');
+
+console.log(`売り上げ${sales}`);
 
 // マシーンユースケースはthis._machineにマシーンモデルを持つ
 // その際、マシーンモデルのinit処理で現在のマシン状態をリポジトリから取ってきてモデル状態に反映させるってことをやる。

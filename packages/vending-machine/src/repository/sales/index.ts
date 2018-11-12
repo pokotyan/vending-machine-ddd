@@ -6,11 +6,9 @@ class Sales implements ISalesRepository {
   getCurrentStatus() {
     // @todo dbから取ってくる
     return {
-      1: 0,
-      5: 0,
-      10: 0,
-      50: 0,
-      100: 0,
+      10: 10,
+      50: 10,
+      100: 1,
       500: 0,
       1000: 0,
     } 

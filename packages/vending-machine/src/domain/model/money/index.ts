@@ -1,6 +1,4 @@
 class Money {
-  1?: number;
-  5?: number;
   10?: number;
   50?: number;
   100?: number;
@@ -8,8 +6,6 @@ class Money {
   1000?: number;
 
   constructor() {
-    this[1] = 0;
-    this[5] = 0;
     this[10] = 0;
     this[50] = 0;
     this[100] = 0;

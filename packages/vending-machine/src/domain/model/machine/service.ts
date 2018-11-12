@@ -2,7 +2,7 @@ import MachineModel from './index';
 import InletModel from '../inlet';
 import MoneyModel from '../money';
 
-const moneyType = ['1', '5', '10', '50', '100', '500', '1000'];
+const moneyType = ['10', '50', '100', '500', '1000'];
 
 export const setInlets = ({ machineModel, inlets }: {
   machineModel: MachineModel;

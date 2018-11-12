@@ -2,12 +2,12 @@ import MachineModel from '../machine';
 import InletModel from '../inlet';
 import MoneyModel from '../money';
 
-export const calcTotalPayments = (machineModel: MachineModel): number => {
-  let totalPaidAmount = 0;
+export const calcTotalPrice = (machineModel: MachineModel, property: 'sales' | 'paidAmount'): number => {
+  let totalPrice = 0;
 
-  Object.keys(machineModel.paidAmount).forEach(price => {
-    totalPaidAmount += (parseInt(price, 10) * machineModel.paidAmount[price]);
+  Object.keys(machineModel[property]).forEach(price => {
+    totalPrice += (parseInt(price, 10) * machineModel[property][price]);
   });
 
-  return totalPaidAmount;
+  return totalPrice;
 }
