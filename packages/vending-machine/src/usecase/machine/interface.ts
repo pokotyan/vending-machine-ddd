@@ -7,4 +7,5 @@ export default interface IMachineUseCase {
   setInlet(inlets: InletModel[]): MachineModel;
   storedItem(inlet: InletModel): MachineModel;
   pay(money: MoneyModel): MachineModel;
+  buyingItem({ inletId }: { inletId: number });
 };

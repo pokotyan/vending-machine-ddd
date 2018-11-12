@@ -8,43 +8,30 @@ import * as Service from './domain/model/service';
 
 const machineUseCase = container.get<IMachineUseCase>(TUseCase.machineUseCase);
 
+console.log('初期化処理-----------------');
 let machine = machineUseCase.initFromDB();
-
 console.log(machine);
 
-machineUseCase.setInlet([{
-  id: 1,
-  type: 'drink',
-  itemName: 'ソーダ',
-  price: 120,
-  temperatureType: 'cold',
-  maxStockNumber: 10,
-  stock: []
-}, {
-  id: 2,
-  type: 'drink',
-  itemName: 'ココア',
-  price: 100,
-  temperatureType: 'hot',
-  maxStockNumber: 10,
-  stock: []
-}]);
 
-console.log(Service.Inlet.isSoldOut(machine.inlets[0]));
-
+console.log('投入口1にアイテムを補充------------');
 machine = machineUseCase.storedItem(machine.inlets[0]);
+console.log(machine);
 
-console.log(machine.inlets[0])
 
+console.log('お金を入れる------------');
 machineUseCase.pay({
   100: 1,
   10: 2
 });
+console.log(machine);
+
+
+console.log('投入口1のアイテム購入------------');
+machineUseCase.buyingItem({ inletId: 1 });
 
 console.log(machine);
 
 
-console.log(Service.Inlet.isPurchaseAvailable({ machine, inletId: 1 }));
 
 // マシーンユースケースはthis._machineにマシーンモデルを持つ
 // その際、マシーンモデルのinit処理で現在のマシン状態をリポジトリから取ってきてモデル状態に反映させるってことをやる。

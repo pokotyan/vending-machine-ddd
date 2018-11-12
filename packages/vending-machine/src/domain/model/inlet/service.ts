@@ -37,11 +37,21 @@ export const setStock = (inletModel: InletModel, item: ItemModel): Promise<Inlet
   return Promise.resolve(inletModel);
 };
 
+export const releaseStock = ({ machine, inletId }: {
+  machine: MachineModel;
+  inletId: number;
+}) => {
+  const inlet = machine.inlets.find(inlet => inlet.id === inletId);
+
+  inlet.stock.pop();
+};
+
+// 引数のinletに在庫があって、かつ現在の投入金額がアイテムの金額を上回るならアイテムは購入可能
 export const isPurchaseAvailable = ({ machine, inletId }: {
   machine: MachineModel;
   inletId: number;
 }): boolean => {
   const inlet = machine.inlets.find(inlet => inlet.id === inletId);
 
-  return Service.Money.calcTotalPayments(machine) >= inlet.price;
+  return !isSoldOut(inlet) && Service.Money.calcTotalPayments(machine) >= inlet.price;
 };

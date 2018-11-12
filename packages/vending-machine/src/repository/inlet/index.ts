@@ -13,7 +13,7 @@ class InletRepository implements IInletRepository {
       {
         id: 1,
         type: 'drink',
-        itemName: 'cola',
+        itemName: 'コーラ',
         price: 120,
         temperatureType: 'cold',
         maxStockNumber: 10,

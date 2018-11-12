@@ -74,8 +74,15 @@ export default class MachineUseCase implements IMachineUseCase {
     return this._machine;
   }
 
-  // buyingItem(inletId: number) {
-  //   // 引数のinletに在庫があって、かつ現在の投入金額がアイテムの金額を上回るならアイテムを放出し、売り上げを加算する
-  // }
+  buyingItem({ inletId }) {
+    const isPurchaseAvailable = Service.Inlet.isPurchaseAvailable({ machine: this._machine, inletId });
+
+    if (isPurchaseAvailable) {
+      Service.Inlet.releaseStock({ machine: this._machine, inletId })    
+      Service.Sales.addSales({ machine: this._machine, inletId });
+    } else {
+      console.log(`投入口${inletId}のアイテムは売り切れ、もしくは投入金額が足りません`);
+    }
+  }
 }
 

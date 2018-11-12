@@ -2,6 +2,8 @@ import MachineModel from './index';
 import InletModel from '../inlet';
 import MoneyModel from '../money';
 
+const moneyType = ['1', '5', '10', '50', '100', '500', '1000'];
+
 export const setInlets = ({ machineModel, inlets }: {
   machineModel: MachineModel;
   inlets: InletModel[];
@@ -13,6 +15,12 @@ export const setPaid = ({ machineModel, paidAmount }: {
   machineModel: MachineModel;
   paidAmount: MoneyModel;
 }): void => {
+  moneyType.forEach(price => {
+    if (!Object.keys(paidAmount).includes(price)) {
+      paidAmount[price] = 0;
+    };
+  })
+
   machineModel.paidAmount = paidAmount;
 }
 
