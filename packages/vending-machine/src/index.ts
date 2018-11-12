@@ -6,7 +6,7 @@ import IMachineUseCase from './usecase/machine/interface';
 import * as Service from './domain/model/service';
 
 
-const machineUseCase = container.get<IMachineUseCase>(TUseCase.machineUseCase);
+export const machineUseCase = container.get<IMachineUseCase>(TUseCase.machineUseCase);
 
 console.log('初期化処理-----------------');
 let machine = machineUseCase.initFromDB();
@@ -30,8 +30,6 @@ console.log('投入口1のアイテム購入------------');
 machineUseCase.buyingItem({ inletId: 1 });
 
 console.log(machine);
-
-
 
 // マシーンユースケースはthis._machineにマシーンモデルを持つ
 // その際、マシーンモデルのinit処理で現在のマシン状態をリポジトリから取ってきてモデル状態に反映させるってことをやる。

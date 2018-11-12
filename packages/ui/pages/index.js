@@ -1,15 +1,7 @@
-import machine from 'vending-machine';
+import * as vendingMachine from 'vending-machine';
 
 
-machine.storedItem([{
-  name: 'chocolate',
-  price: 100,
-  type: 'food'
-},{
-  name: 'cola',
-  price: 100,
-  type: 'drink'
-}]);
+const machine = vendingMachine.machineUseCase.initFromDB();
 
 console.log(machine);
 
