@@ -1,4 +1,5 @@
 import MachineModel from '../machine';
+import * as Service from '../service';
 
 // @todo お釣りをそもそも現在の在庫で払えるかというチェックが必要
 export const calcChange = ({ changePattern = [500, 100, 50, 10], changePrice, machine }: {
@@ -35,4 +36,14 @@ export const calcChange = ({ changePattern = [500, 100, 50, 10], changePrice, ma
       calcChange({ changePattern, changePrice, machine });
     }
   });
+}
+
+// 支払い中止レバー
+export const abort = ({ machine }: {
+  machine: MachineModel
+}) => {
+  Object.keys(machine.paidAmount).forEach(price => {
+    machine.change[price] = machine.paidAmount[price];
+    machine.paidAmount[price] = 0;
+  })
 }

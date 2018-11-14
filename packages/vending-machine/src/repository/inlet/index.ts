@@ -17,7 +17,6 @@ class InletRepository implements IInletRepository {
         price: 120,
         temperatureType: 'cold',
         maxStockNumber: 10,
-        currentStockNumber: 0,
         stock: []
       }, {
         id: 2,
@@ -26,7 +25,6 @@ class InletRepository implements IInletRepository {
         price: 130,
         temperatureType: 'hot',
         maxStockNumber: 10,
-        currentStockNumber: 0,
         stock: []
       }
     ];

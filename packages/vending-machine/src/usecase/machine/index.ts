@@ -58,7 +58,8 @@ export default class MachineUseCase implements IMachineUseCase {
 
   // itemリポジトリから在庫を取得。
   // その在庫を投入口に入れていく。
-  storedItem(inlet: InletModel): MachineModel {
+  storedItem({ inletId }: { inletId: number }): MachineModel {
+    const inlet = this._machine.inlets.find(inlet => inlet.id === inletId);
     const stockItems = this._itemRepository.getStockItems();
 
     stockItems.forEach(stockItem => {
@@ -83,6 +84,15 @@ export default class MachineUseCase implements IMachineUseCase {
     } else {
       console.log(`投入口${inletId}のアイテムは売り切れ、もしくは投入金額が足りません`);
     }
+
+    return this._machine;
+  }
+
+  // 支払いの取り消しバーの処理。現在投入されている金額を全てお釣りとして排出させる
+  abort() {
+    Service.Change.abort({ machine: this._machine });
+
+    return this._machine;
   }
 }
 
