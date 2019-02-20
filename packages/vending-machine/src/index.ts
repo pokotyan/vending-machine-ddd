@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import container from './inversify.config'
 
 import { TYPES as TUseCase } from './usecase/machine/type';
@@ -8,14 +9,16 @@ import * as Service from './domain/model/service';
 
 export const machineUseCase = container.get<IMachineUseCase>(TUseCase.machineUseCase);
 
+console.log('@todo classTransformerを入れてservice層が必要なくなった。domainのところにメソッドを写していく。(machineモデルは済)')
+
 console.log('初期化処理-----------------');
-let machine = machineUseCase.initFromDB();
+const machine = machineUseCase.initFromDB();
 console.log(machine);
 
 
 console.log('投入口1にアイテムを補充------------');
-machine = machineUseCase.storedItem(machine.inlets[0]);
-console.log(machine);
+machineUseCase.storedItem({ inletId: 1 });
+console.log(machine.inlets[0]);
 
 
 console.log('お金を入れる------------');
@@ -27,6 +30,12 @@ console.log(machine);
 
 let sales = Service.Money.calcTotalPrice(machine, 'sales');
 console.log(`売り上げ${sales}`);
+
+
+console.log('中止------------');
+machineUseCase.abort();
+console.log(machine);
+
 
 
 console.log('投入口1のアイテム購入------------');

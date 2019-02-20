@@ -9,15 +9,15 @@ class Inlet {
   maxStockNumber: number;
   stock: ItemModel[];
 
-  constructor(model) {
-    this.id = model.id || null;
-    this.type = model.type || '';
-    this.itemName = model.itemName || '';
-    this.price = model.price || 0;
-    this.temperatureType = model.temperatureType || 'cold';
-    this.maxStockNumber = model.maxStockNumber || 0;
-    this.stock = model.stock || 0;
-  }
+  // constructor(model) {
+  //   this.id = model.id || null;
+  //   this.type = model.type || '';
+  //   this.itemName = model.itemName || '';
+  //   this.price = model.price || 0;
+  //   this.temperatureType = model.temperatureType || 'cold';
+  //   this.maxStockNumber = model.maxStockNumber || 0;
+  //   this.stock = model.stock || 0;
+  // }
 }
 
 export default Inlet;

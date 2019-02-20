@@ -1,17 +1,50 @@
+import { Type } from "class-transformer";
 import InletModel from '../../../domain/model/inlet';
 import MoneyModel from '../../../domain/model/money';
 
+const MONEY_TYPE = ['10', '50', '100', '500', '1000'];
+
 class Machine {
+  @Type(() => InletModel)
   inlets: InletModel[];
+
+  @Type(() => MoneyModel)
   sales: MoneyModel;
+
+  @Type(() => MoneyModel)
   paidAmount: MoneyModel;
+
+  @Type(() => MoneyModel)
   change: MoneyModel;
 
-  constructor() {
-    this.inlets = [];
-    this.sales = new MoneyModel();
-    this.paidAmount = new MoneyModel();
-    this.change = new MoneyModel();
+  setInlets({ inlets }: {
+    inlets: InletModel[];
+  }) {
+    this.inlets = inlets;
+  }
+  
+  setPaidAmount({ paidAmount }: {
+    paidAmount?: MoneyModel;
+  }) {
+    if (!paidAmount) {
+      return this.paidAmount = { 10: 0, 50: 0, 100: 0, 500: 0, 1000: 0 };
+    }
+
+    MONEY_TYPE.forEach(price => {
+      if (!Object.keys(paidAmount).includes(price)) {
+        paidAmount[price] = 0;
+      };
+    })
+  
+    this.paidAmount = paidAmount;
+  }
+
+  setSales({ sales }: { sales: MoneyModel }) {
+    this.sales = sales;
+  }
+
+  setChange() {
+    this.change = { 10: 0, 50: 0, 100: 0, 500: 0, 1000: 0 };
   }
 }
 

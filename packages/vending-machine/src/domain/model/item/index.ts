@@ -4,12 +4,12 @@ class Item {
   type: string;
   temperatureType: string;
 
-  constructor(model) {
-    this.inletId = model.inletId || null;
-    this.name = model.name || '';
-    this.type = model.type || 'drink';
-    this.temperatureType = model.temperatureType || 'cold';
-  }
+  // constructor(model) {
+  //   this.inletId = model.inletId || null;
+  //   this.name = model.name || '';
+  //   this.type = model.type || 'drink';
+  //   this.temperatureType = model.temperatureType || 'cold';
+  // }
 }
 
 export default Item;

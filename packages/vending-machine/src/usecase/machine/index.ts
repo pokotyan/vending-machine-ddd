@@ -1,6 +1,5 @@
-
-
-import { injectable, inject } from 'inversify';
+import { injectable } from 'inversify';
+import { plainToClass } from 'class-transformer';
 import { lazyInject } from '../../inversify.decorator'
 
 import IMachineUseCase from './interface';
@@ -16,34 +15,40 @@ import { TYPES as TItemRepository } from '../../repository/item/type';
 import ISalesRepository from '../../repository/sales/interface'
 import { TYPES as TSalesRepository } from '../../repository/sales/type';
 
-// import IMachineRepository from '../../repository/machine/interface'
-// import { TYPES as TMachineRepository } from '../../repository/machine/type';
-
 import InletModel from '../../domain/model/inlet';
 import MoneyModel from '../../domain/model/money';
 import MachineModel from '../../domain/model/machine';
 
 @injectable()
 export default class MachineUseCase implements IMachineUseCase {
-  @lazyInject(TInletRepository.inletRepository) public _inletRepository: IInletRepository;
-  @lazyInject(TItemRepository.itemRepository) public _itemRepository: IItemRepository;
-  @lazyInject(TSalesRepository.salesRepository) public _salesRepository: ISalesRepository;
-  // @lazyInject(TMachineRepository.machineRepository) public _machineRepository: IMachineRepository;
+  @lazyInject(TInletRepository.inletRepository) private _inletRepository: IInletRepository;
+  @lazyInject(TItemRepository.itemRepository) private _itemRepository: IItemRepository;
+  @lazyInject(TSalesRepository.salesRepository) private _salesRepository: ISalesRepository;
 
-  private _machine: MachineModel;
+  machine: MachineModel;
 
-  public constructor() {
-    this._machine = new MachineModel();
+  constructor() {
+    this.machine = new MachineModel();
+  }
+
+  _setMachineModel() {
+    this.machine = plainToClass(MachineModel, this.machine)
   }
 
   initFromDB(): MachineModel {
     const inlets = this._inletRepository.getCurrentStatus();
     const sales = this._salesRepository.getCurrentStatus();
+    // const paidAmount = this._inletRepository.getCurrentPaidAmount(); // @todo 投入額とお釣りも現在の状態をdbからとってくる?
+    // const change = this._salesRepository.getCurrentChange();
+    
+    this.machine.setInlets({ inlets });
+    this.machine.setSales({ sales });
+    this.machine.setPaidAmount({}); // dbからとってくるならここにとってきた値を渡す
+    this.machine.setChange();
 
-    Service.Machine.setInlets({ machineModel: this._machine, inlets })
-    Service.Machine.setSales({ machineModel: this._machine, sales })
+    this._setMachineModel();
 
-    return this._machine;
+    return this.machine;
   }
 
   setInlet(inlets: InletModel[]): MachineModel {
@@ -51,48 +56,58 @@ export default class MachineUseCase implements IMachineUseCase {
     this._inletRepository.set(inlets);
 
     // ui側で使うマシーンモデルの更新
-    Service.Machine.setInlets({ machineModel: this._machine, inlets })
+    this.machine.setInlets({ inlets });
 
-    return this._machine;
+    this._setMachineModel();
+   
+    return this.machine;
   }
 
   // itemリポジトリから在庫を取得。
   // その在庫を投入口に入れていく。
   storedItem({ inletId }: { inletId: number }): MachineModel {
-    const inlet = this._machine.inlets.find(inlet => inlet.id === inletId);
+    const inlet = this.machine.inlets.find(inlet => inlet.id === inletId);
     const stockItems = this._itemRepository.getStockItems();
 
     stockItems.forEach(stockItem => {
       Service.Inlet.setStock(inlet, stockItem).catch(() => {});
     });
 
-    return this._machine;
+    this._setMachineModel();
+
+    return this.machine;
   }
 
   pay(money: MoneyModel): MachineModel {
-    Service.Machine.setPaid({ machineModel: this._machine, paidAmount: money });
+    this.machine.setPaidAmount({ paidAmount: money });
 
-    return this._machine;
+    this._setMachineModel();
+
+    return this.machine;
   }
 
   buyingItem({ inletId }) {
-    const isPurchaseAvailable = Service.Inlet.isPurchaseAvailable({ machine: this._machine, inletId });
+    const isPurchaseAvailable = Service.Inlet.isPurchaseAvailable({ machine: this.machine, inletId });
 
     if (isPurchaseAvailable) {
-      Service.Inlet.releaseStock({ machine: this._machine, inletId })    
-      Service.Sales.addSales({ machine: this._machine, inletId });
+      Service.Inlet.releaseStock({ machine: this.machine, inletId })    
+      Service.Sales.addSales({ machine: this.machine, inletId });
     } else {
       console.log(`投入口${inletId}のアイテムは売り切れ、もしくは投入金額が足りません`);
     }
 
-    return this._machine;
+    this._setMachineModel();
+
+    return this.machine;
   }
 
   // 支払いの取り消しバーの処理。現在投入されている金額を全てお釣りとして排出させる
   abort() {
-    Service.Change.abort({ machine: this._machine });
+    Service.Change.abort({ machine: this.machine });
 
-    return this._machine;
+    this._setMachineModel();
+
+    return this.machine;
   }
 }
 
